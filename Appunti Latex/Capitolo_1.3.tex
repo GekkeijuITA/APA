@@ -1,0 +1,28 @@
+\documentclass[12pt]{article}
+\usepackage[italian]{babel}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amssymb}
+
+\geometry{margin=2cm}
+
+\title{Capitolo 1.3}
+\author{Lorenzo Vaccarecci}
+\date{27 Febbraio 2024}
+
+\graphicspath{{./Immagini/}}
+\newtheorem{definition}{Definizione}
+\newtheorem{proposition}{Proposizione}
+
+\begin{document}
+\maketitle
+\section{Correttezza di algoritmi ricorsivi}
+\begin{definition}
+    \textbf{Definizione induttiva} Una definizione induttiva R è un insieme di regole \(\frac{Pr}{c}\) dove Pr è un insieme detto delle premesse e c è un elemento, detto la conseguenza della regola. L'insieme definito induttivamente \(\mathcal{I}\) è il più piccolo tra gli insiemi X chiusi rispetto a R, ossia tali che, per ogni regola \(\frac{Pr}{c} \in R, \text{ se } Pr \subseteq X \text{ allora } c \in X\). 
+\end{definition}
+In genere una definizione induttiva è data attraverso una qualche descrizione finita "a parole".\\
+\\\textbf{Principio di induzione (forma generale)} Sia \(R\) una definizione induttiva, \(\mathcal{I}\) l'insieme da essa definito, e \(P\) un predicato su \(U\) con \(\mathcal{I} \subseteq U\). Se\\
+\textbf{Base} \(P(c)\) vale per ogni \(\frac{\emptyset}{c} \in R\)\\
+\textbf{Passo induttivo} (\(P(d)\) vale per ogni \(d \in Pr\)) implica che valga \(P(c)\) per ogni \(\frac{Pr}{c} \in R, Pr \neq \emptyset\) allora \(P(d)\) vale per ogni \(d \in \mathcal{I}\)
+\end{document}
