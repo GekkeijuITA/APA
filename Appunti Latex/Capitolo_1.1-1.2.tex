@@ -85,7 +85,7 @@ Formalmente, se \(i\) è un input, siano \(t(i) \text{ e } s(i)\) il tempo di es
 \end{itemize}
 Per il caso medio, per ogni \(n\) si considerano tutti i possibili input di dimensione \(n\), siano \(i_{1},\dots, i_{N}\), e si fa la media aritmetica dei tempi:
 \begin{equation}
-    T_{avg}(n) = \frac{t(i_{1}+\dots+t(i_{N}))}{N}
+    T_{avg}(n) = \frac{t(i_{1})+\dots+t(i_{N})}{N}
 \end{equation}
 Usiamo la media pesata se i possibili input non sono equiprobabili.
 \\Vi sono quindi nove possibili affermazioni sulla complessità di un algoritmo, non tutte però indipendenti tra loro nè ugualmente interessanti. In particolare, si ha che se \(T_{worst}(n)=O(f(n))\), allora anche \(T_{avg}(n)=O(f(n))\) e \(T_{best}(n)=O(f(n))\), e simmetricamente se \(T_{best}(n)=\Omega(f(n))\), allora anche \(T_{avg}(n)=\Omega(f(n))\) e \(T_{worst}(n)=\Omega(f(n))\).
@@ -102,7 +102,7 @@ Nel caso di un algoritmo randomizzato, possiamo calcolare la media (pesata) dei 
 \end{equation}
 \textit{worst case expected running time}:
 \begin{equation}
-    T_{exp_worst}(n) = \max\left\{T_{exp}(i)|i \text{ ha dimensione }n\right\}
+    T_{exp\_worst}(n) = \max\left\{T_{exp}(i)|i \text{ ha dimensione }n\right\}
 \end{equation}
 Nel confronto precedente abbiamo assunto che l'algoritmo randomizzato fornisca sempre il risultato corretto (algoritmi Las Vegas). Alcuni tipi di algoritmi randomizzati (Monte Carlo) possono anche fornire un risultato errato (forniscono comunque il risultato giusto con probabilità \(> 0\)). In questo caso la ripetizione dell'esecuzione permette di limitare la probabilità di sbagliare. Il vantaggio si ha tipicamente in casi in cui l'algoritmo deterministico è molto inefficiente.
 \subsection*{Complessità dei problemi}
