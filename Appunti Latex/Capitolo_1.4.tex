@@ -1,0 +1,26 @@
+\documentclass[12pt]{article}
+\usepackage[italian]{babel}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{qtree}
+
+\geometry{margin=2cm}
+
+\title{Capitolo 1.4}
+\author{Lorenzo Vaccarecci}
+\date{4 Marzo 2024}
+
+\graphicspath{{./Immagini/}}
+\newtheorem{definition}{Definizione}
+\newtheorem{proposition}{Proposizione}
+
+\begin{document}
+\maketitle
+\section{Correttezza di algoritmi ricorsivi}
+\begin{description}
+    \item[Esempio] Torre di Hanoi. 
+    \item[] \Tree[.Hanoi(n) [.Hanoi(n-1) [.Hanoi(n-2) ] [.Hanoi(n-2) ] ] [.Hanoi(n-1) [.Hanoi(n-2) ] [.Hanoi(n-2) ] ] ]
+\end{description}
+\end{document}
