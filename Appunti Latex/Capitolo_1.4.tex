@@ -5,22 +5,87 @@
 \usepackage{graphicx}
 \usepackage{amssymb}
 \usepackage{qtree}
+\usepackage{tikz}
 
 \geometry{margin=2cm}
 
-\title{Capitolo 1.4}
+\title{Capitolo 1.4 - 1.5}
 \author{Lorenzo Vaccarecci}
 \date{4 Marzo 2024}
 
 \graphicspath{{./Immagini/}}
-\newtheorem{definition}{Definizione}
-\newtheorem{proposition}{Proposizione}
 
 \begin{document}
 \maketitle
 \section{Correttezza di algoritmi ricorsivi}
+\subsection{Torre di Hanoi}
+\textit{Devo spostare tutti i dischi da A a C, senza mai mettere un disco più grande su uno più piccolo.}
+\begin{center}
+    \begin{tikzpicture}
+        \draw (0,0) -- (0,2);
+        \draw[draw=blue] (-1,0) rectangle ++(2,0.3);
+        \draw[draw=green] (-0.75,0.3) rectangle ++(1.5,0.3);
+        \draw[draw=red] (-0.5,0.6) rectangle ++(1,0.3);
+        \draw[draw=orange] (-0.25,0.9) rectangle ++(0.5,0.3);
+        \draw (2,0) -- (2,2);
+        \draw (3,0) -- (3,2);
+        \node at (0,-0.25) {A};
+        \node at (2,-0.25) {B};
+        \node at (3,-0.25) {C};
+    \end{tikzpicture}
+\end{center}
+Pensiamo in modo ricorsivo:
+\begin{itemize}
+    \item $n=1 \rightarrow$ da $A$ a $C$
+    \item $n+1 \rightarrow$ sposto $1\dots n$ da $A$ a $B$, sposto $n+1$ da $A$ a $C$, sposto $1\dots n$ da $B$ a $C$
+\end{itemize}
+\begin{verbatim}
+    Hanoi(n, from, aux, to) {
+        if(n==1) move(from, to);
+        else {
+            Hanoi(n-1, from, to, aux); // T(n-1)
+            move(from, to); // 1
+            Hanoi(n-1, aux, from, to); // T(n-1)
+        }
+    }
+\end{verbatim}
+\textbf{Complessità:} $T(n)$= numero di mosse(move) per $n$ dischi. $\rightarrow$ Lo possiamo esprimere ricorsivamente (induttivamente):
 \begin{description}
-    \item[Esempio] Torre di Hanoi. 
-    \item[] \Tree[.Hanoi(n) [.Hanoi(n-1) [.Hanoi(n-2) ] [.Hanoi(n-2) ] ] [.Hanoi(n-1) [.Hanoi(n-2) ] [.Hanoi(n-2) ] ] ]
+    \item[Relazione di ricorrenza]
+    \item[]  $T(1)=1$
+    \item[] $T(n>1)=T(n-1)+1+T(n-1)$
 \end{description}
+Una tecnica che spesso consente di individuare la soluzione di una relazione di ricorrenza consiste nell'espandere successivamente le chiamate ricorsive nella definizione di $T(n)$, chiamata anche \textit{metodo "empirico"}.\newpage
+Un modo alternativo di ottenere lo stesso risultato è espandendo "per livelli" (dell'albero di ricorsione), nel modo illustrato sotto:
+\begin{center}
+    \Tree
+    [.Hanoi(n) 
+        [.Hanoi(n-1) 
+            [.Hanoi(n-2)
+                {\ldots}
+            ]
+            [.Hanoi(n-2) ]
+        ]
+        [.Hanoi(n-1)
+            [.Hanoi(n-2) ]
+            [.Hanoi(n-2)
+                {\ldots}
+            ]
+        ] 
+    ]
+\end{center}
+Una volta individuata la soluzione in uno dei due modi, si può verificare rigorosamente la correttezza per induzione aritmetica.\\
+Si ha quindi che $T(n)=\Theta(2^{n})$, mentre la complessità in spazio corrisponde all'altezza dell'albero di ricorsione, ossia alla massima profondità dello stack, quindi è $S(n)=\Omega (n)$.\\
+\textbf{Induzione aritmetica}:
+\begin{itemize}
+    \item n=1: 2-1=1
+    \item n$>$1: \begin{itemize}
+        \item Ipotesi induttiva: mosse richieste per n dischi $2^{n}-1$
+        \item mosse per $n+1$ dischi: $2^{n+1}-1$
+    \end{itemize}
+\end{itemize}
+Complessità del problema $O(2^{n})$ e $\Omega (2^{n}) \rightarrow$ algoritmo esponenziale  quindi problema intrattabile (e chiuso). Esiste un algoritmo migliore? No.\\
+Prova: per induzione aritmetica, per spostare $n$ dischi ci vogliono almeno $2^{n}-1$ mosse. Vero per $n=1$\\
+Ipotesi induttiva: per spostare $n$ dischi ci vogliono $2^{n}-1$ mosse.\\
+Tesi: per spostare $n+1$ dischi ci vogliono $2^{n+1}-1$ mosse.\\ 
 \end{document}
