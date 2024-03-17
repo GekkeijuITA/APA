@@ -1,0 +1,113 @@
+\documentclass[12pt]{article}
+\usepackage[italian]{babel}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{tikz}
+
+\geometry{margin=2cm}
+
+\title{Capitolo 2}
+\author{Lorenzo Vaccarecci}
+\date{12 Marzo 2024}
+
+\graphicspath{{./Immagini/}}
+\begin{document}
+\maketitle
+\section{Introduzione e terminologia}
+Un grafo (orientato) è una coppia $G=(V,E)$ dove:
+\begin{itemize}
+    \item $V$ è un insieme i cui elementi sono detti \textit{nodi} o \textit{vertici}
+    \item $E$ è un insieme di archi (edges), dove un arco è una coppia di nodi detti estremi dell'arco.
+\end{itemize}
+Dato il seguente grafo non orientato:
+\begin{center}
+    \begin{tikzpicture}[main/.style = {draw, circle}, node distance= 1.5cm]
+        \node[main] (a) {A};
+        \node[main] (b) [right of=a] {B};
+        \node[main] (c) [below left of=a] {C};
+        \node[main] (d) [below right of=c] {D};
+        \node[main] (e) [right of=d] {E};
+        \node[main] (f) [below right of=b] {F};
+        \draw (a) -- (b);
+        \draw (a) -- (c);
+        \draw (b) -- (f);
+        \draw (c) -- (d);
+        \draw (d) -- (e);
+        \draw (e) -- (f);
+    \end{tikzpicture}
+\end{center}
+\begin{itemize}
+    \item l'arco $(A,B)$ è \textbf{incidente} sui nodi $A$ e $B$
+    \item i nodi $A$ e $B$ sono \textbf{adiacenti}, $A$ è adiacente a $B$ e viceversa
+    \item il grado $\delta (u)$ di un nodo $u$ è il numero di archi incidenti sul nodo, per esempio $\delta (B)=4$
+\end{itemize}
+Dato il seguente grafo non orientato:
+\begin{center}
+    \begin{tikzpicture}[main/.style = {draw, circle}, node distance= 1.5cm]
+        \node[main] (a) {A};
+        \node[main] (b) [right of=a] {B};
+        \node[main] (c) [below left of=a] {C};
+        \node[main] (d) [below right of=c] {D};
+        \node[main] (e) [right of=d] {E};
+        \node[main] (f) [below right of=b] {F};
+        \draw[->] (a) -- (b);
+        \draw[<-] (a) -- (c);
+        \draw[->] (b) -- (f);
+        \draw[->] (c) -- (d);
+        \draw[<-] (d) -- (e);
+        \draw[<-] (e) -- (f);
+        \draw[->] (c) -- (b);
+        \draw[->] (b) -- (d);
+        \draw[->] (d) -- (f);
+    \end{tikzpicture}
+\end{center}
+\begin{itemize}
+    \item l'arco $(A,B)$ è incidente sui nodi $A$ e $B$, \textit{uscente} da $A$ e \textit{entrante} in $B$
+    \item il nodo $B$ è adiacente a $A$, ma $A$ non è adiacente a $B$
+    \item i nodi adiacenti a un nodo $A$ si chiamano anche \textbf{vicini} di $A$
+    \item il grado $\delta (u)$ di un nodo $u$ è il numero di archi incidenti sul nodo, per esempio $\delta(B)=4$
+    \item il grado \textbf{uscente} $\delta_{out}(u)$ di un nodo $u$ è il numero di archi uscenti dal nodo, per esempio $\delta_{out}(B)=2$
+    \item il grado \textbf{entrante} $\delta_{in}(u)$ di un nodo $u$ è il numero di archi entranti nel nodo, per esempio $\delta_{in}(B)=2$
+\end{itemize}
+Dato un grafo con $n$ nodi e $m$ archi, si ha che:
+\begin{itemize}
+    \item se il grafo non è orientato \begin{itemize}
+        \item la somma dei gradi dei nodi è il doppio del numero degli archi: \(\sum_{u\in V}\delta(u)=2m\)
+        \item $m$ è al massimo il numero di tutte le possibili coppie non ordinate di nodi, ossia \(n+(n-1)+\dots+1=n(n+1)/2\) quindi $m=O(n^{2})$
+    \end{itemize}
+    \item se il grafo è orientato \begin{itemize}
+        \item la somma dei gradi uscenti dei nodi e la somma dei gradi entranti dei nodi sono uguali al numero degli archi: \(\sum_{u\in V}\delta_{out}(u)=\sum_{u\in V}\delta_{in}(u)=m\), quindi \(\sum_{u\in V}\delta(u)=2m\)
+        \item $m$ è al massimo il numero di tutte le possibili coppie ordinate di nodi, ossia $n^{2}$, quindi $m=O(n^{2})$
+    \end{itemize} 
+\end{itemize}
+Un grafo in cui il numero degli archi sia dell'ordine di $n^{2}$ si dice \textbf{grafo denso}.
+\begin{itemize}
+    \item un cammino (path) è una sequenza di nodi in cui ciascun nodo è adiacente al successivo
+    \item nel caso di un grafo non orientato si trova anche il termine catena invece di cammino
+    \item gli archi $(u_{i},u_{i+1})$ si dicono contenuti nel cammino
+    \item $n-1$, ossia il numero degli archi, è la lunghezza del cammino
+    \item un cammino è degenere o nullo se è costituito da un solo nodo, ossia ha lunghezza 0
+    \item è semplice se i nodi sono distinti, tranne al più il primo e l'ultimo
+    \item in un grafo orientato, un cammino non nullo forma un ciclo se il primo nodo coincide con l'ultimo
+    \item in un grafo non orientato, un cammino(catena) di lunghezza $\geq$3 forma un ciclo o circuito (semplice) se il primo nodo coincide con l'ultimo e tutti gli altri nodi sono distinti
+    \item $v$ è raggiungibile da $u$ se esiste un cammino da $u$ a $v$
+\end{itemize}
+Un grafo $G$ è \textbf{aciclico} se non vi sono cicli in $G$, nel caso di un grafo orientato è anche detto \textbf{DAG (directed acyclic graph)}. Un grafo orientato si dice \textbf{fortemente connesso} se ogni nodo è raggiungibile da ogni altro, \textbf{debolmente connesso} se il grafo non orientato corrispondente è connesso. Un \textbf{sottografo} di $G=(V,E)$ è un grafo ottenuto da $G$, non considerando alcuni archi o alcuni nodi insieme agli archi incidenti su di essi. Il \textbf{sottografo indotto} da un sottoinsieme $V'$ di nodi è il sottografo di $G$ costituito dai nodi di $V'$ e dagli archi di $G$ che connettono tali nodi. Un \textbf{albero libero} è un  grafo non orientato connesso aciclico. Dato un grafo non orientato e connesso $G$, un \textbf{albero ricoprente} (\textit{spanning tree}) di $G$ è un sottografo di $G$ che contiene tutti i nodi ed è un albero libero. Dato un grafo non orientato (eventualmente non connesso) $G$, si chiama \textbf{foresta ricoprente} di $G$ un sottografo di $G$ che contiene tutti i nodi ed è una foresta libera.
+\subsection{Rappresentazione di un grafo}
+\begin{description}
+    \item[Lista di archi] Si memorizza l'insieme dei nodi e la lista degli archi, spazio totale $O(n+m)$
+    \item[Liste di adiacenza] Per ogni nodo si memorizza la lista dei nodi adiacenti. Si hanno $n$ liste, di lunghezza totale $2m$ per grafo non orientato, $m$ per grafo orientato, quindi complessità spaziale $O(n+m)$
+    \item[Matrice di adiacenza] Assumendo corrispondenza tra nodi e $1\dots n$, matrice quadrata $M$ di dimensione $n$ a valori booleani (oppure 0,1), dove $M_{i,j}$ vero se e solo se esiste l'arco $(u_{i},u_{j})$. Richiede più spazio, $O(n^{2})$ ma permette di verificare in tempo costante se esiste un arco tra due nodi mentre per trovare gli  adiacenti diventa più costoso. 
+\end{description} 
+La rappresentazione generalmente più conveniente è quella con liste di adiacenza, in particolare per grafi \textit{sparsi} ossia con un numero di archi $m$ molto minore di $n^{2}$. La rappresentazione con matrice di adiacenza può essere preferibile quando il grafo è denso ($m$ prossimo a $n^{2}$) o quando è importante controllare in modo efficiente se esiste un arco tra due vertici dati. Entrambe le rappresentazioni sono facilmente adattabili ai grafi \textit{pesati}, ossia dove ogni arco ha un perso(costo) associato.
+\section{Visite}
+Per visitare un grafo si possono usare algoritmi simili a quelli per gli alberi. L'insieme dei nodi viene partizionato in tre insiemi, tradizionalmente indicati con i colori bianco, grigio, nero:
+\begin{description}
+    \item[Bianco] inesplorato, ossia non ancora toccato dall'algoritmo
+    \item[Grigio] aperto, ossia toccato dall'algoritmo (visita iniziata)
+    \item[Nero] chiuso (visita conclusa)
+\end{description}
+Le visite iterative usano un insieme $F$ detto \textbf{frangia} da cui vengono  via via estratti i nodi da visitare.
+\end{document}
