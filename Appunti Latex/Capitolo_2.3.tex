@@ -1,0 +1,68 @@
+\documentclass[12pt]{article}
+\usepackage[italian]{babel}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{tikz}
+
+\geometry{margin=2cm}
+
+\title{Capitolo 2.3}
+\author{Lorenzo Vaccarecci}
+\date{18 Marzo 2024}
+
+\graphicspath{{./Immagini/}}
+
+\begin{document}
+\maketitle
+\section{Microripasso Heap}
+\begin{itemize}
+    \setlength\itemsep{0em}
+    \item heap = albero binario
+    \item ogni nodo ha priorità minore dei figli (minimo=radice)
+    \item quasi completo a sinistra
+    \item bilanciato (altezza $\log n$)
+\end{itemize}
+\section{Algoritmo di Dijsktra}
+\begin{description}
+    \item[\textbf{Grafo pesato}] Un grafo pesato è un grafo $G=(V,E)$ dove a ogni arco è associato un peso o costo attraverso una funzione $c_{\_}:E\rightarrow\mathbb{R}$. Il costo di un cammino da $s$ a $t$ è la somma dei pesi o costi degli archi che compongono il cammino. Un cammino da $s$ a $t$ si dice \textit{minimo} se ha peso minimo (detto distanza) fra tutti i cammini da $s$ a $t$.  
+\end{description}
+Problema: dato un grafo orientato pesato $G$, con pesi non negativi e dati un nodo di partenza $s$ e un nodo di arrivo $t$, trovare un cammino minimo da $s$ a $t$. Generalizzazione: dati un grafo orientato pesato $G$ con pesi non negativi e un nodo di partenza $s$, trovare per ogni nodo $u$ del grafo il cammino minimo da $s$ a $u$.\\
+Algoritmo di Dijkstra, idea: è una visita in ampiezza in cui a ogni passo:
+\begin{itemize}
+    \setlength\itemsep{0em}
+    \item per i nodi già visitati si ha la distanza e l'albero $T$ di cammini minimi
+    \item per ogni nodo non ancora visitato si ha distanza provvisoria = lunghezza minima di un cammino in $T$ più un arco
+    \item si estrae dalla coda un nodo a distanza provvisoria minima (che risulta essere la distanza)
+    \item si aggiornano le distanze provvisorie dei nodi adiacenti al nodo estratto tenendo conto del nuovo arco in $T$
+\end{itemize}\newpage
+\subsection{Pseudocodice}
+\begin{verbatim}
+    Dijkstra(G,s)
+        for each (u nodo in G) dist[u] = inf
+        parent[s] = null
+        dist[s] = 0
+        Q = heap vuoto
+        for each (u nodo in G) Q.add(u,dist[u])
+        while (Q non vuota)
+            u = Q.getMin()
+            for each((u,v) arco in G)
+                if(dist[u] + c_{uv} < dist[v])
+                    parent[v] = u
+                    dist[v] = dist[u] + c_{uv}
+                    Q.changePriority(v,dist[v])
+\end{verbatim}
+\subsection{Correttezza}
+Sia $d(u)$ la distanza (lunghezza di un cammino minimo) da $s$ a $u$. L'invariante è composta di due parti:
+\begin{enumerate}
+    \item $\forall u\notin H \quad dist[u]=d(u)$
+    \item per ogni nodo $u$ in $Q$ $dist[u]=d_{\backslash Q}(u)$= lunghezza di un cammino minimo da $s$ a $u$ i cui nodi, tranne $u$, non sono in $Q$, ossia sono nodi "neri".
+\end{enumerate}
+L'invariante vale all'inizio:
+\begin{enumerate}
+    \item vale banalmente perchè non ci sono nodi neri ($H$ vuoto)
+    \item vale banalmente perchè la distanza è per tutti infinito, tranne che per $s$ per cui vale 0 (non ci sono cammini che usano solo nodi neri) 
+\end{enumerate}
+Postcondizione: al termine dell'esecuzione dell'algoritmo la coda è vuota, quindi tutti i nodi sono neri. Poichè vale l'invariante (1), per ogni nodo è stato trovato il cammino minimo da $s$.
+\end{document}
