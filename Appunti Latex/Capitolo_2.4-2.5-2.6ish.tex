@@ -62,5 +62,78 @@ L'invariante si mantiene:
 Postcondizione: all'uscita dal ciclo tutti i nodi sono neri, quindi $T$ connette tutti i nodi, cioè è un albero ricoprente di $G$. Per l'invariante (1), $T\subseteq MST$ per qualche $MST$ minimo albero ricoprente, quindi $T=MST$.\\
 L'analisi della complessità è esattamente la stessa dell'algoritmo di Dijkstra, quindi $O((n+m)\log n)$.
 \section{Algoritmo di Kruskal}
+Anche questo algoritmo risolve il problema del minimo albero ricoprente. In particolare, il minimo albero ricoprente viene costruito mantendeno una foresta alla quale si aggiunge a ogni iterazione un nuovo arco che unisce due sottoalberi distinti. Quindi l'algoritmo di Kruskal, a differenza di quello di Prim, non costruisce l'albero a partire da un nodo scelto come radice, ma come un insieme di archi che alla fine risulta essere un grafo connesso aciclico, quindi un albero libero.
+\begin{verbatim}
+    Kruskal(G)
+        s = sequenza archi di G in ordine di costo crescente
+        T = foresta formata dai nodi di G e nessun arco
+        counter = 0
+        while(counter < n-1) // un albero di n nodi ha n-1 archi
+            estrai da s il primo elemento (u,v)
+            if(u,v non connessi in T) T = T + (u,v) // aggiunta dell'arco
+            counter++
+        return T
+\end{verbatim}
+Non si fa nessun reinserimento o variazione di ordine quindi realizzabile per esempio con un array.
+\subsection{Correttezza}
+Simile a Prim. Invariante: $T \subseteq MST$ per qualche $MST$ minimo albero ricoprente di $G$.\\
+All'inizio vale banalmente perchè in $T$ non ci sono archi. Si mantiene, infatti: si sceglie un archo $(u,v)$ di costo minimo tra quelli non ancora estratti in $T$.
+\begin{itemize}
+    \item Se $u$ e $v$ appartengono a uno stesso albero nella foresta $T$, aggiungendo l'arco $(u,v)$ si avrebbe un ciclo, quindi esso viene correttamente scartato, $T$ rimane uguale e l'invariante vale ancora.
+    \item Se $u$ e $v$ appartengono a due alberi distinti nella foresta $T$, dimostriamo che aggiungendo l'arco $(u,v)$ a $T$ si ha ancora una foresta contenuta in un minimo albero ricoprente. Per assurdo supponiamo non sia così. Se in $MST$ non c'è l'arco $(u,v)$, ci deve essere un altro cammino che connette $u$ a $v$. Se eliminiamo l'arco $(x,y)$ da $MST$, otteniamo due alberi non connessi fra loro, e quindi se aggiungiamo a questi due alberi l'arco $(u,v)$ otteniamo, analogamente a Prim: \begin{itemize}
+        \item nuovamente un albero
+        \item che contiene tutti i nodi di $G$, quindi è un albero ricoprente
+        \item in cui la somma dei pesi degli archi è minore o uguale di quella di $MST$
+    \end{itemize}
+\end{itemize}
+Postcondizione: all'uscita dal ciclo si ha necessariamente un unico albero, perchè l'algoritmo ha esaminato tutti gli archi di $G$ unendo ogni volta due alberi di $T$ se non ancora connessi. Quindi alla fine $T$ è un unico albero, sottoalbero di un minimo albero ricoprente di $G$ contenente tutti i nodi di $G$, quindi è un minimo albero ricoprente di $G$.
+\subsection{Strutture union-find}
+Servono a rappresentare una collezione di insiemi disgiunti sulla quale siano possibili le seguenti operazioni:
+\begin{itemize}
+    \item \texttt{makeSet(a)} aggiunge l'insieme costituito dal solo elemento \texttt{a} (singleton)
+    \item \texttt{union(A,B)} sostituisce gli insiemi \texttt{A} e \texttt{B} con la loro unione
+    \item \texttt{find(a)} restituisce l'insieme che contiene l'elemento \texttt{a}
+\end{itemize}
+Gli alberi \textit{QuickFind} permettono di eseguire rapidamente la \texttt{find}. Sono alberi di altezza \textbf{uno}.
+\begin{itemize}
+    \item \texttt{makeSet(a)} aggiunge un nuovo albero con due nodi, radice \texttt{a} e figlio \texttt{a}: $O(1)$
+    \item \texttt{union(a,b)} rende la radice dell'albero che contiene \texttt{a} padre di tutti i nodi dell'albero che contiene \texttt{b}: $O(n)$ 
+    \item \texttt{find(a)} restituisce il padre di \texttt{a}: $O(1)$
+\end{itemize}
+Gli alberi \textit{QuickUnion} permettono di eseguire rapidamente la \texttt{union}. Sono alberi di altezza arbitraria.
+\begin{itemize}
+    \item \texttt{makeSet(a)} aggiunge un nuovo albero con un unico nodo \texttt{a}: $O(1)$
+    \item \texttt{union(a,b)} tra rappresentanti rende \texttt{a} padre di \texttt{b}: $O(1)$
+    \item \texttt{union(a,b)} generica, richiede prima una \texttt{find}: $O(n)$
+    \item \texttt{find(a)} risale la catena dei padri di \texttt{a}: $O(n)$
+\end{itemize}
+Per mantenere gli alberi bilanciati, si può effettuare l'unione scegliendo sempre come radice del nuovo insieme quella dell'insieme di cardinalità maggiore, cioè la radice dell'albero con meno nodi diventa figlio della radice dell'altro (\textit{Union-by-Size}). Con la union-by-size, l'altezza di ogni albero della struttura union-find è al pià logaritmica nel numero di nodi dell'albero. SI ha quindi:
+\begin{itemize}
+    \item \texttt{union} tra rappresentanti: $O(1)$
+    \item \texttt{union} generica: $O(\log n)$
+    \item \texttt{find}: $O(\log n)$
+\end{itemize}
+Una tecnica alternativa a quella dell'unione per dimensione, detta \textit{Union-by-Rank}, è la seguente: l'unione viene effettuata scegliendo come radice del nuovo albero quella dell'albero di altezza maggiore, cioè la radice della'lbero meno alto diventa figlio della radice di quello più alto. Con la union-by-rank, l'altezza di ogni albero della struttura union-find è al più logaritmica nel numero di nodi dell'albero. \textit{Path compression}: la \texttt{find} rende figli della radice tutti i nodi che incontra nel suo  percorso di risalita dal nodo alla radice. Si noti che, dato che la \texttt{union} tra elementi generici consiste di  due operazioni di \texttt{find} seguite dall'unione vera e propria, introducendo la compressione dei cammini nella \texttt{find} la introduciamo automaticamente anche nella \texttt{union}. Il vantaggio della compressione dei cammini si ha quando si effettua una sequenza di operazioni, non può quindi venire misurato dalla complessità di una singola operazione. Si considera quindi la nozione di \textit{complessità ammortizzata}. Si può dimostrare che la complessità per sequenza di $n$ \texttt{makeSet}, $m$ \texttt{find} e $n-1$ \texttt{union} è $O(m+n\log n)$.
+\begin{verbatim}
+    Kruskal(G)
+        s = sequenza archi di G in ordine di costo crescente
+        T = foresta formata dai nodi di G e nessun arco
+        UF = struttura union-find vuota
+        for each (u nodo in G) UF.makeSet(u)
+        while(s non vuota)
+            estrai da s il primo elemento (u,v)
+            if(UF.union_by_need(u,v))
+                /* restituisce vero ed esegue union delle radici se 
+                UF.find(u) != UF.find(v)
+                falso altrimenti */
+                T = T + (u,v)
+        return T
+\end{verbatim}
+Complessità dell'algoritmo: $O(m\log m)$
 \section{Ordinamento topologico}
+E' facile vedere che  in un grafo aciclico la relazione sull'insieme dei nodi "$v$ è raggiungibile da $u$" è un ordine parziale. Un ordine totale, che "raffina" questo ordine parziale si chiama ordine topologico.
+\begin{description}
+    \item[\textbf{Ordine topologico}] Un ordine topologico su un grafo orientato aciclico $G=(V,E)$ è un ordine totale (stretto) $<$ su $V$ tale che, per ogni $u,v\in V$: $(u,v)\in E\Rightarrow u<v$ 
+\end{description}
+In un grafo orientato definiamo un nodo sorgente (\textbf{source}) se non ha archi entranti, pozzo (\textbf{sink}) s enon ha archi uscenti. E' facile vedere che in un grafo orientato aciclico esistono sempre almento un nodo pozzo e un nodo sorgente: infatti, se per assurdo così non fosse a partire da un nodo qualunque si potrebbe sempre costruire un ciclo. Per evitare di modificare il grafo e trovare in tempo costante, a ogni passo, un nodo sorgente, possiamo memorizzare per ogni nodo il suo indegree. Invece di rimuovere un arco $(u,v)$ si decrementa il valore di indegree per il nodo $v$. Quando il valore di indegree per un nodo diventa zero, lo si inserisce in un insieme di nodi sorgente da cui si estrae ogni volta il nodo successivo da inserire nell'ordine topologico. 
 \end{document}
