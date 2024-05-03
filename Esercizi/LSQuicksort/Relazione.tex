@@ -1,0 +1,86 @@
+\documentclass[12pt]{article}
+
+\usepackage[italian]{babel}
+\usepackage{amsmath}
+\usepackage{verse}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{amssymb}
+
+\geometry{margin=2cm}
+
+\let\olditemize\itemize
+\renewcommand\itemize{\olditemize\setlength\itemsep{0em}}
+
+\title{Relazione: LS Quicksort}
+\author{Lorenzo Livio Vaccarecci (matr. 5462843)}
+\date{A.A. 2023/2024}
+
+\begin{document}
+\maketitle
+Dopo aver implementato l'algoritmo Quicksort Las Vegas, 
+si sono utilizzate delle sequenze di numeri casuali di 
+cardinalità $10^{4}$ eseguendo l'algoritmo per $R=10^{5}$ 
+volte (con array generati al momento) e si sono ottenuti i seguenti valori:
+\begin{itemize}
+    \item Valore medio($\hat{\mu}$) $\simeq $ 156533.23
+    \item Deviazione standard empirica($\hat{\sigma}$) $\simeq$ 6498.49
+\end{itemize}
+Per calcolare i valori sono state usate le formule:
+\begin{equation*}
+    \hat{\mu} = \frac{1}{R}\sum_{r=1}^{R}X_{r} 
+\end{equation*}
+Dove $X_{r}$ è il numero di confronti effettuati al passo $r$-esimo.
+\begin{equation*}
+    \hat{\sigma}^{2} = \frac{1}{R-1}\sum_{r=1}^{R}(X_{r}-\hat{\mu})^{2}
+\end{equation*}
+Usando il numero di confronti effettuati si può generare il seguente 
+istogramma:
+\begin{center}
+    \includegraphics[scale=0.8]{Istogramma.png}
+\end{center}
+Il grafico mostra che la distribuzione dei valori è ampia (questo 
+conferma la deviazione standard elevata), il picco si trova in un 
+valore vicino a 150000 confermando il valore medio calcolato.\\
+Calcolata la disuguaglianza di Chebyshev usando la formula per il 
+doppio ($2\hat{\mu}\simeq 313066.46$) e il triplo ($3\hat{\mu} \simeq 469599.69$) del valore medio con $v=2 \quad v=3$ rispettivamente:
+\begin{equation*}
+    \frac{\hat{\sigma}^{2}}{(v-1)^{2}\hat{\mu}^{2}}
+\end{equation*}
+Abbiamo che:
+\begin{equation*}
+    \frac{6498.49^{2}}{(2-1)^{2}\cdot 156533.23^{2}} \simeq 0.0017 
+    \simeq 0.17\%
+\end{equation*}
+e
+\begin{equation*}
+    \frac{6498.49^{2}}{(3-1)^{2}\cdot 156533.23^{2}} \simeq 0.0004 
+    \simeq 0.04\%
+\end{equation*}
+Calcolata anche la disuguaglianza di Markov per le stesse $v$ usando la formula:
+\begin{equation*}
+    \frac{\hat{\mu}}{v\hat{\mu}}
+\end{equation*}
+Si ottengono facilmente le due probabilità:
+\begin{equation*}
+    \frac{156533.23}{2\cdot 156533.23} = 0.5 = 50\%
+\end{equation*}
+e
+\begin{equation*}
+    \frac{156533.23}{3\cdot 156533.23} \simeq 0.33 \simeq 33\%
+\end{equation*}
+Secondo la disuguaglianza di Markov, la probabilità che il numero di confronti
+sia superiore a $2\hat{\mu}$ è del 50\%, mentre la probabilità che sia
+superiore a $3\hat{\mu}$ è del 33\%. Questo significa che la disuguaglianza
+di Markov è molto meno cauta rispetto a quella di Chebyshev che, invece, 
+fornisce un limite superiore alla probabilità che il numero di confronti
+sia superiore a $2\hat{\mu}$ del 0.17\% e del 0.04\% per $3\hat{\mu}$.\\
+In conclusione, i risultati ottenuti dall'implementazione dell'algoritmo 
+Quicksort Las Vegas confermano la sua efficienza per la risoluzione di
+problemi di ordinamenti di array molto grandi. Il valore medio e la 
+deviazione standard calcolati indicano che la distribuzione dei valori
+è ampia ma concentrata attorno al valore medio come confermato dall'istogramma.\\
+Le disuguaglianze di Chebyshev e Markov confermano che la probabilità
+che il numero di confronti sia superiore al doppio e al triplo del valore 
+medio è molto bassa.
+\end{document}
