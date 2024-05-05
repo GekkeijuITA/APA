@@ -27,12 +27,9 @@ def LVQuickSort(Sequence):
     confronto = confronta(s, pos, Sequence)
     sequenceMin = LVQuickSort(confronto[0])
     sequenceMax = LVQuickSort(confronto[1])
-
-    # necessario per avere in output un array senza troncamenti
     sorted_sequence = sequenceMin
-    sorted_sequence.extend([s])  # la funzione extend concatena
+    sorted_sequence.extend([s])
     sorted_sequence.extend(sequenceMax)
-
     return sorted_sequence
 
 def random_array(n):
