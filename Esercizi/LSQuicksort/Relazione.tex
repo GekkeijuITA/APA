@@ -6,11 +6,39 @@
 \usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
 
 \geometry{margin=2cm}
 
 \let\olditemize\itemize
 \renewcommand\itemize{\olditemize\setlength\itemsep{0em}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
 
 \title{Relazione: LS Quicksort}
 \author{Lorenzo Livio Vaccarecci (matr. 5462843)}
@@ -18,6 +46,7 @@
 
 \begin{document}
 \maketitle
+\lstinputlisting[language=Python]{LSQuicksort.py}
 Dopo aver implementato l'algoritmo Quicksort Las Vegas, 
 si sono utilizzate delle sequenze di numeri casuali di 
 cardinalità $10^{4}$ eseguendo l'algoritmo per $R=10^{5}$ 
