@@ -21,7 +21,7 @@
 Dopo aver implementato l'algoritmo Quicksort Las Vegas, 
 si sono utilizzate delle sequenze di numeri casuali di 
 cardinalità $10^{4}$ eseguendo l'algoritmo per $R=10^{5}$ 
-volte (con array generati al momento) e si sono ottenuti i seguenti valori:
+volte (con array generati in modo casuale) e si sono ottenuti i seguenti valori:
 \begin{itemize}
     \item Valore medio($\hat{\mu}$) $\simeq $ 156533.23
     \item Deviazione standard empirica($\hat{\sigma}$) $\simeq$ 6498.49
@@ -30,7 +30,7 @@ Per calcolare i valori sono state usate le formule:
 \begin{equation*}
     \hat{\mu} = \frac{1}{R}\sum_{r=1}^{R}X_{r} 
 \end{equation*}
-Dove $X_{r}$ è il numero di confronti effettuati al passo $r$-esimo.
+Dove $X_{r}$ è il numero di confronti effettuati al passo $r$-esimo e:
 \begin{equation*}
     \hat{\sigma}^{2} = \frac{1}{R-1}\sum_{r=1}^{R}(X_{r}-\hat{\mu})^{2}
 \end{equation*}
@@ -41,13 +41,30 @@ istogramma:
 \end{center}
 Il grafico mostra che la distribuzione dei valori è ampia (questo 
 conferma la deviazione standard elevata), il picco si trova in un 
-valore vicino a 150000 confermando il valore medio calcolato.\\
-Calcolata la disuguaglianza di Chebyshev usando la formula per il 
-doppio ($2\hat{\mu}\simeq 313066.46$) e il triplo ($3\hat{\mu} \simeq 469599.69$) del valore medio con $v=2 \quad v=3$ rispettivamente:
+valore vicino a 150000 confermando il valore medio ottenuto.
+Un'ulteriore conferma che il valore medio è quello atteso è data dalla formula:
+\begin{equation*}
+    \mathbb{E}[X] = \sum_{i=1}^{n-1}2\ln(n-i+1) = 2\sum_{i=1}^{n-1}\ln(n-i+1)
+    = 2\sum_{i=1}^{10^{4}-1}\ln(10^{4}-i+1) \simeq 164216.47
+\end{equation*}
+In modo simile:
+\begin{equation*}
+    \mathbb{E}[X]=2n\ln(n) = 2\cdot 10^{4}\ln(10^{4}) \simeq 184206.81
+\end{equation*}
+Si può notare che i valori medi ottenuti dalle formule teoriche e quello
+calcolato dall'implementazione dell'algoritmo sono molto simili.
+Questa discrepanza può essere attribuita a diversi fattori, tra cui la natura
+approssimativa delle formule teoriche e la presenza di numeri casuali. Tuttavia,
+il valore medio ottenuto dal programma è ragionevole e conferma l'efficienza
+dell'algoritmo.\\
+Calcolata la disuguaglianza di Chebyshev usando la formula:
 \begin{equation*}
     \frac{\hat{\sigma}^{2}}{(v-1)^{2}\hat{\mu}^{2}}
 \end{equation*}
-Abbiamo che:
+Abbiamo che  per il 
+doppio ($2\hat{\mu}\simeq 313066.46$) e il triplo 
+($3\hat{\mu} \simeq 469599.69$) del valore medio con 
+$v=2 \quad v=3$ rispettivamente:
 \begin{equation*}
     \frac{6498.49^{2}}{(2-1)^{2}\cdot 156533.23^{2}} \simeq 0.0017 
     \simeq 0.17\%
