@@ -74,9 +74,9 @@ for i in tqdm(range(R)):
 val_medio = valore_medio(R, Xr)
 dev_standard = deviazione_standard(R, Xr, val_medio)
 
-print("Valore medio: " + str(val_medio))
-print("Varianza: " + str(dev_standard))
-print("Deviazione standard: " + str(math.sqrt(dev_standard)))
+print("Valore medio: ", val_medio)
+print("Varianza: ", dev_standard)
+print("Deviazione standard: ", math.sqrt(dev_standard))
 
 plt.hist(Xr, edgecolor="black", bins=50)
 plt.xlabel("Numero di confronti")
