@@ -54,12 +54,19 @@ def markov(mu, val):
 def chebyshev(mu, val, dev):
     return dev / (((val-1)**2)*(mu**2))
 
+def conta_frequenze(Xr, n):
+    k = 0
+    for x in Xr:
+        if x >= n*val_medio:
+            k += 1
+    return k
+
 n = 10**4
 R = 10**5
 Xr = []
+array = random_array(n)
 
 for i in tqdm(range(R)):
-    array = random_array(n)
     X = 0
     LVQuickSort(array)
     Xr.append(X)
@@ -84,3 +91,6 @@ print(markov(val_medio, v2))
 
 print(chebyshev(val_medio, v1, dev_standard))
 print(chebyshev(val_medio, v2, dev_standard))
+
+print("Frequenza empirica di X per il doppio: ", conta_frequenze(Xr, 2)/R)
+print("Frequenza empirica di X per il triplo: ", conta_frequenze(Xr, 3)/R)
