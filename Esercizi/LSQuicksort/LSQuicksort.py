@@ -2,6 +2,7 @@ import random
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 import math
+import numpy as np
 
 X = 0
 
@@ -20,23 +21,13 @@ def confronta(s, pos, Sequence):
     return [sequenceMin, sequenceMax]
 
 def LVQuickSort(Sequence):
-    if (len(Sequence) <= 1):
-        return Sequence
+    if (len(Sequence) <= 1): return Sequence
     pos = random.randint(0, len(Sequence)-1)
     s = Sequence[pos]
     confronto = confronta(s, pos, Sequence)
     sequenceMin = LVQuickSort(confronto[0])
     sequenceMax = LVQuickSort(confronto[1])
-    sorted_sequence = sequenceMin
-    sorted_sequence.extend([s])
-    sorted_sequence.extend(sequenceMax)
-    return sorted_sequence
-
-def random_array(n):
-    arr = []
-    for i in range(n):
-        arr.append(random.randint(0, n))
-    return arr
+    return np.concatenate([sequenceMin, [s], sequenceMax])
 
 def valore_medio(R, Xr):
     sommatoria = sum(Xr)
@@ -51,10 +42,10 @@ def deviazione_standard(R, Xr, u):
 def markov(mu, val):
     return mu/(val*mu)
 
-def chebyshev(mu, val, dev):
-    return dev / (((val-1)**2)*(mu**2))
+def chebyshev(mu, val, var):
+    return var / (((val-1)**2)*(mu**2))
 
-def conta_frequenze(Xr, n):
+def conta_frequenze(Xr, n, val_medio):
     k = 0
     for x in Xr:
         if x >= n*val_medio:
@@ -64,7 +55,7 @@ def conta_frequenze(Xr, n):
 n = 10**4
 R = 10**5
 Xr = []
-array = random_array(n)
+array = np.random.randint(0, n, size=n)
 
 for i in tqdm(range(R)):
     X = 0
@@ -92,5 +83,5 @@ print(markov(val_medio, v2))
 print(chebyshev(val_medio, v1, dev_standard))
 print(chebyshev(val_medio, v2, dev_standard))
 
-print("Frequenza empirica di X per il doppio: ", conta_frequenze(Xr, 2)/R)
-print("Frequenza empirica di X per il triplo: ", conta_frequenze(Xr, 3)/R)
+print("Frequenza empirica di X per il doppio: ", conta_frequenze(Xr, v1, val_medio)/R)
+print("Frequenza empirica di X per il triplo: ", conta_frequenze(Xr, v2, val_medio)/R)
