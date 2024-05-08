@@ -33,17 +33,17 @@ def valore_medio(R, Xr):
     sommatoria = sum(Xr)
     return (1/R) * sommatoria
 
-def deviazione_standard(R, Xr, u):
+def varianza(R, Xr, u):
     sommatoria = 0
     for i in Xr:
         sommatoria += ((i-u)**2)
     return (1/(R-1)) * sommatoria
 
-def markov(mu, val):
-    return mu/(val*mu)
+def markov(mu, k):
+    return mu/(k*mu)
 
-def chebyshev(mu, val, var):
-    return var / (((val-1)**2)*(mu**2))
+def chebyshev(mu, k, varianza):
+    return varianza / (((k-1)**2)*(mu**2))
 
 def conta_frequenze(Xr, n, val_medio):
     k = 0
@@ -63,7 +63,8 @@ for i in tqdm(range(R)):
     Xr.append(X)
 
 val_medio = valore_medio(R, Xr)
-dev_standard = deviazione_standard(R, Xr, val_medio)
+varianza = varianza(R, Xr, val_medio)
+dev_standard = math.sqrt(varianza)
 
 print("Valore medio: ", val_medio)
 print("Varianza: ", dev_standard)
@@ -80,8 +81,8 @@ v2 = 3
 print(markov(val_medio, v1))
 print(markov(val_medio, v2))
 
-print(chebyshev(val_medio, v1, dev_standard))
-print(chebyshev(val_medio, v2, dev_standard))
+print(chebyshev(val_medio, v1, varianza))
+print(chebyshev(val_medio, v2, varianza))
 
 print("Frequenza empirica di X per il doppio: ", conta_frequenze(Xr, v1, val_medio)/R)
 print("Frequenza empirica di X per il triplo: ", conta_frequenze(Xr, v2, val_medio)/R)
