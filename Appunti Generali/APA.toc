@@ -1,0 +1,13 @@
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
+\contentsline {chapter}{\numberline {1}Analisi della correttezza e complessità degli algoritmi}{2}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Notazioni asintotiche}{2}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Proprietà della notazione asintotica}{3}{subsection.1.1.1}%
+\contentsline {subsubsection}{Transitiva}{3}{section*.2}%
+\contentsline {subsubsection}{Riflessiva}{3}{section*.3}%
+\contentsline {subsubsection}{Simmetrica}{3}{section*.4}%
+\contentsline {subsubsection}{Simmetrica trasposta}{3}{section*.5}%
+\contentsline {subsubsection}{Somma}{3}{section*.6}%
+\contentsline {subsubsection}{Comportamenti notevoli intrattabili}{3}{section*.7}%
+\contentsline {section}{\numberline {1.2}Complessità di algoritmi e problemi}{4}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Corretteza di algoritmi ricorsivi}{5}{section.1.3}%
