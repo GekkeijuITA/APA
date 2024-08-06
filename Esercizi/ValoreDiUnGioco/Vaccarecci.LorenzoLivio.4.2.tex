@@ -1,0 +1,87 @@
+\documentclass[12pt]{article}
+
+\usepackage[italian]{babel}
+\usepackage{amsmath}
+\usepackage{verse}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{xfrac}
+
+\geometry{margin=2cm}
+
+\let\olditemize\itemize
+\renewcommand\itemize{\olditemize\setlength\itemsep{0em}}
+
+\title{Valore di un gioco}
+\author{Lorenzo Livio Vaccarecci (matr. 5462843)}
+\date{A.A. 2023/2024}
+
+\begin{document}
+\maketitle
+\begin{equation*}
+    M =
+    \begin{pmatrix}
+        4 & -1 \\
+        -2 & 3
+    \end{pmatrix}
+\end{equation*}
+\textbf{Compito 4.2}: Dimostra che $V_{R}<V_{C}$, determina le strategie miste ottimali di Roberta e Carlo e il valore del gioco.
+\subsection*{a)}
+\begin{equation*}
+    V_{R} = \max\{-1,-2\}=-1, V_{C} = \min\{4,3\}=3
+\end{equation*}
+$V_{R}<V_{C}$
+\subsection*{b)}
+\begin{equation*}
+    p = (p \quad 1-p)^{T}, q = (q \quad 1-q)^{T}
+\end{equation*}
+\vspace{0.01cm}
+\begin{equation*}
+    \begin{aligned}
+        p^{T}Mq & = (p \quad 1-p) \begin{pmatrix}
+            4 & -1 \\
+            -2 & 3
+        \end{pmatrix} \begin{pmatrix}
+            q \\
+            1-q
+        \end{pmatrix} \\
+        & = 10qp - 5q - 4p + 3 \\
+        & = 10\left(qp-\frac{5}{10}q-\frac{4}{10}p+\frac{3}{10}\right) \\
+        & =10\left(qp-\frac{1}{2}q-\frac{2}{5}p+\frac{2}{10}+\frac{1}{10}\right) \\
+        & = 10\left(p-\frac{1}{2}\right)\left(q-\frac{2}{5}\right)+1
+    \end{aligned}
+\end{equation*}
+\begin{equation*}
+    \hat{p} = \left(\frac{1}{2}\quad\frac{1}{2}\right)^{T}
+    \hat{q} = \left(\frac{2}{5}\quad\frac{3}{5}\right)^{T}
+\end{equation*}
+\newpage
+\subsection*{c)}
+Quando vengono utilizzate le strategie miste ottimali $\hat{p},\hat{q}$, il valore del gioco è:
+\begin{equation*}
+        V = V_{R} = V_{C} = 1
+\end{equation*}
+Dimostrazione:
+\begin{equation*}
+    \hat{p}^{T}M = \left(\frac{1}{2}\quad\frac{1}{2}\right) \begin{pmatrix}
+        4 & -1 \\
+        -2 & 3
+    \end{pmatrix}
+    = \left(1 \quad 1\right)
+\end{equation*}
+\begin{equation*}
+    M\hat{q} = \begin{pmatrix}
+        4 & -1 \\
+        -2 & 3
+    \end{pmatrix}\begin{pmatrix}
+        \sfrac{2}{5} \\
+        \sfrac{3}{5}
+    \end{pmatrix} = \begin{pmatrix}
+        1 \\
+        1
+    \end{pmatrix}
+\end{equation*}
+\end{document}
