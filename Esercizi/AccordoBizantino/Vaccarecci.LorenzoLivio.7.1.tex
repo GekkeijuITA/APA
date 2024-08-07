@@ -1,0 +1,54 @@
+\documentclass[12pt]{article}
+
+\usepackage[italian]{babel}
+\usepackage{amsmath}
+\usepackage{verse}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\geometry{margin=2cm}
+
+\let\olditemize\itemize
+\renewcommand\itemize{\olditemize\setlength\itemsep{0em}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\title{Accordo Bizantino MC}
+\author{Lorenzo Livio Vaccarecci (matr. 5462843)}
+\date{A.A. 2023/2024}
+
+\begin{document}
+\maketitle
+\section{Codice}
+\lstinputlisting[language=Python]{accordobizantino.py}
+\section{Osservazioni}
+\includegraphics[width=\textwidth]{Grafico.png}
+Il grafico suggerisce che la maggior parte delle $2^{10}$ esecuzioni dell'accordo bizantino viene completata nel primo round, con un dimezzamento del successo ad ogni round successivo. Questo è dovuto al fatto che non tutti i processi affidabili concordano e che per qualche processo $p$ avremo $tally(p)\geq T$, almeno $f+1$ processi affidabili il bit che verrà spedito è il maggioritario di $p$, e quindi non può esserci un altro processo affidabile che abbia il tally maggiore o uguale a $T$ con i bit maggioritari diversi da quello di $p$. Quindi con probabilità $\frac{1}{2}$, il lancio della moneta, tutti i processi affidabili convergono al bit maggiorante di $p$. \textbf{Da finire!}
+\end{document}
