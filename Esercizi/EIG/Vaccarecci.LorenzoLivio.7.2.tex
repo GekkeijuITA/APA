@@ -1,0 +1,42 @@
+\documentclass[12pt]{article}
+
+\usepackage[italian]{babel}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+\geometry{margin=2cm}
+
+\let\olditemize\itemize
+\renewcommand\itemize{\olditemize\setlength\itemsep{0em}}
+
+\title{EIG}
+\author{Lorenzo Livio Vaccarecci (matr. 5462843)}
+\date{A.A. 2023/2024}
+
+\begin{document}
+\maketitle
+\textbf{Condizioni: } in caso di pareggio vince 1 (cinema in centro)
+\begin{center}
+    \begin{tikzpicture}[main/.style = {draw, circle}, node distance=1.8cm] 
+        \node[main] (1) {A}; 
+            \node[main] (2) [below left of=1] {2};
+                \node[main] (5) [below left of=2] {2};
+                \node[main] (6) [below of=2] {$x_{A}$};
+            \node[main] (3) [below of=1] {2};
+                \node[main] (7) [below left =2cm and 0.4cm of 3] {2};
+                \node[main] (8) [below right=2cm and 0.4cm of 3] {$x_{B}$};
+            \node[main] (4) [below right of=1] {$x_{A}$};
+                \node[main] (9) [below of=4] {$x_{C}$};
+                \node[main] (10) [below right of=4] {$x_{C}$};
+    
+            \draw (1) -- node[midway, above right, sloped, pos=1] {A} (2);
+            \draw (1) -- node[midway, above left, sloped, pos=1] {B} (3);
+            \draw (1) -- node[midway, above left, sloped, pos=1] {C} (4);
+    \end{tikzpicture}
+\end{center} 
+\end{document}
