@@ -21,22 +21,102 @@
 \begin{document}
 \maketitle
 \textbf{Condizioni: } in caso di pareggio vince 1 (cinema in centro)
+\\\textbf{Caso in cui $A$ e $B$ sono inizialmente d'accordo}
 \begin{center}
     \begin{tikzpicture}[main/.style = {draw, circle}, node distance=1.8cm] 
-        \node[main] (1) {A}; 
-            \node[main] (2) [below left of=1] {2};
-                \node[main] (5) [below left of=2] {2};
+        \node[main] [fill=green] (1) {A=1}; 
+            \node[main] (2) [below left of=1, fill=green] {1};
+                \node[main] (5) [below left of=2] {1};
                 \node[main] (6) [below of=2] {$x_{A}$};
-            \node[main] (3) [below of=1] {2};
-                \node[main] (7) [below left =2cm and 0.4cm of 3] {2};
+            \node[main] (3) [below of=1, fill=green] {1};
+                \node[main] (7) [below left =2cm and 0.4cm of 3] {1};
                 \node[main] (8) [below right=2cm and 0.4cm of 3] {$x_{B}$};
             \node[main] (4) [below right of=1] {$x_{A}$};
                 \node[main] (9) [below of=4] {$x_{C}$};
                 \node[main] (10) [below right of=4] {$x_{C}$};
     
-            \draw (1) -- node[midway, above right, sloped, pos=1] {A} (2);
-            \draw (1) -- node[midway, above left, sloped, pos=1] {B} (3);
-            \draw (1) -- node[midway, above left, sloped, pos=1] {C} (4);
+            \draw (1) -- node[midway, xshift=-1mm, yshift=2.5mm] {A} (2);
+            \draw (1) -- node[midway, xshift=-2mm] {B} (3);
+            \draw (1) -- node[midway, xshift=1mm, yshift=2.5mm] {C} (4);
+            \draw (2) -- node[midway, xshift=-1mm, yshift=2.5mm] {B} (5);
+            \draw (2) -- node[midway, xshift=2mm] {C} (6);
+            \draw (3) -- node[midway, xshift=-1mm, yshift=2.5mm] {A} (7);
+            \draw (3) -- node[midway, xshift=1mm, yshift=2.5mm] {C} (8);
+            \draw (4) -- node[midway, xshift=-2mm] {A} (9);
+            \draw (4) -- node[midway, xshift=1mm, yshift=2.5mm] {B} (10);
     \end{tikzpicture}
-\end{center} 
+    \hspace{1cm}
+    \begin{tikzpicture}[main/.style = {draw, circle}, node distance=1.8cm] 
+        \node[main] [fill=green] (1) {B=1}; 
+            \node[main] (2) [below left of=1, fill=green] {1};
+                \node[main] (5) [below left of=2] {1};
+                \node[main] (6) [below of=2] {$x_{A}$};
+            \node[main] (3) [below of=1, fill=green] {1};
+                \node[main] (7) [below left =2cm and 0.4cm of 3] {1};
+                \node[main] (8) [below right=2cm and 0.4cm of 3] {$x_{B}$};
+            \node[main] (4) [below right of=1] {$x_{B}$};
+                \node[main] (9) [below of=4] {$x_{C}$};
+                \node[main] (10) [below right of=4] {$x_{C}$};
+    
+            \draw (1) -- node[midway, xshift=-1mm, yshift=2.5mm] {A} (2);
+            \draw (1) -- node[midway, xshift=-2mm] {B} (3);
+            \draw (1) -- node[midway, xshift=1mm, yshift=2.5mm] {C} (4);
+            \draw (2) -- node[midway, xshift=-1mm, yshift=2.5mm] {B} (5);
+            \draw (2) -- node[midway, xshift=2mm] {C} (6);
+            \draw (3) -- node[midway, xshift=-1mm, yshift=2.5mm] {A} (7);
+            \draw (3) -- node[midway, xshift=1mm, yshift=2.5mm] {C} (8);
+            \draw (4) -- node[midway, xshift=-2mm] {A} (9);
+            \draw (4) -- node[midway, xshift=1mm, yshift=2.5mm] {B} (10);
+    \end{tikzpicture}
+\end{center}
+Vincono $A$ e $B$.\\
+\textbf{Caso in cui $A$ e $B$ \underline{non} sono inizialmente d'accordo}
+\begin{center}
+    \begin{tikzpicture}[main/.style = {draw, circle}, node distance=2cm] 
+        \node[main] (1) [fill=red] {A=1}; 
+            \node[main] (2) [below left of=1, fill=red] {2 $\rightarrow$ 1};
+                \node[main] (5) [below left of=2] {1};
+                \node[main] (6) [below of=2] {$x_{A}$};
+            \node[main] (3) [below of=1, fill=green] {1};
+                \node[main] (7) [below left =2cm and 0.4cm of 3] {2};
+                \node[main] (8) [below right=2cm and 0.4cm of 3] {$x_{B}=1$};
+            \node[main] (4) [below right of=1] {$x_{A}$};
+                \node[main] (9) [below of=4] {$x_{C}$};
+                \node[main] (10) [below right of=4] {$x_{C}$};
+    
+            \draw (1) -- node[midway, xshift=-1mm, yshift=2.5mm] {A} (2);
+            \draw (1) -- node[midway, xshift=-2mm] {B} (3);
+            \draw (1) -- node[midway, xshift=1mm, yshift=2.5mm] {C} (4);
+            \draw (2) -- node[midway, xshift=-1mm, yshift=2.5mm] {B} (5);
+            \draw (2) -- node[midway, xshift=2mm] {C} (6);
+            \draw (3) -- node[midway, xshift=-1mm, yshift=2.5mm] {A} (7);
+            \draw (3) -- node[midway, xshift=1mm, yshift=2.5mm] {C} (8);
+            \draw (4) -- node[midway, xshift=-2mm] {A} (9);
+            \draw (4) -- node[midway, xshift=1mm, yshift=2.5mm] {B} (10);
+    \end{tikzpicture}
+    \hspace{1cm}
+    \begin{tikzpicture}[main/.style = {draw, circle}, node distance=1.8cm] 
+        \node[main] (1) [fill=green] {B=1}; 
+            \node[main] (2) [below left of=1, fill=red] {2 $\rightarrow$ 1};
+                \node[main] (5) [below left of=2] {1};
+                \node[main] (6) [below of=2] {$x_{A}$};
+            \node[main] (3) [below of=1, fill=green] {1};
+                \node[main] (7) [below left =2cm and 0.4cm of 3] {2};
+                \node[main] (8) [below right=2cm and 0.4cm of 3] {$x_{B}=1$};
+            \node[main] (4) [below right of=1] {$x_{B}$};
+                \node[main] (9) [below of=4] {$x_{C}$};
+                \node[main] (10) [below right of=4] {$x_{C}$};
+    
+            \draw (1) -- node[midway, xshift=-1mm, yshift=2.5mm] {A} (2);
+            \draw (1) -- node[midway, xshift=-2mm] {B} (3);
+            \draw (1) -- node[midway, xshift=1mm, yshift=2.5mm] {C} (4);
+            \draw (2) -- node[midway, xshift=-1mm, yshift=2.5mm] {B} (5);
+            \draw (2) -- node[midway, xshift=2mm] {C} (6);
+            \draw (3) -- node[midway, xshift=-1mm, yshift=2.5mm] {A} (7);
+            \draw (3) -- node[midway, xshift=1mm, yshift=2.5mm] {C} (8);
+            \draw (4) -- node[midway, xshift=-2mm] {A} (9);
+            \draw (4) -- node[midway, xshift=1mm, yshift=2.5mm] {B} (10);
+    \end{tikzpicture}
+\end{center}
+Vince $C$ perchè riesce a far cambiare idea ad $A$.
 \end{document}
