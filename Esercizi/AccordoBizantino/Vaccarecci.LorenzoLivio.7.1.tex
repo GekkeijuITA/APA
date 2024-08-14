@@ -50,5 +50,6 @@
 \lstinputlisting[language=Python]{accordobizantino.py}
 \section{Osservazioni}
 \includegraphics[width=\textwidth]{Grafico.png}
-Il grafico suggerisce che la maggior parte delle $2^{10}$ esecuzioni dell'accordo bizantino viene completata nel primo round, con un dimezzamento del successo ad ogni round successivo. Questo è dovuto al fatto che non tutti i processi affidabili concordano e che per qualche processo $p$ avremo $tally(p)\geq T$, almeno $f+1$ processi affidabili il bit che verrà spedito è il maggioritario di $p$, e quindi non può esserci un altro processo affidabile che abbia il tally maggiore o uguale a $T$ con i bit maggioritari diversi da quello di $p$. Quindi con probabilità $\frac{1}{2}$, il lancio della moneta, tutti i processi affidabili convergono al bit maggiorante di $p$. \textbf{Da finire!}
+Il grafico suggerisce che la maggior parte delle $2^{10}$ esecuzioni dell'accordo bizantino viene completata nel primo round, con un dimezzamento del successo ad ogni round successivo.\\
+Se in un qualche round per un processo affidabile $j$ risulta che $tally(j)\geq T$ e l'esito del lancio della moneta coincide con $maj(j)$, il round successivo l'accordo è certamente raggiunto perchè \textbf{BOH}
 \end{document}
