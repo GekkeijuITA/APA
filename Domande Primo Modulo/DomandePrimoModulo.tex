@@ -1,0 +1,92 @@
+\documentclass[12pt]{article}
+
+\usepackage[italian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\geometry{margin=2cm}
+
+\newcounter{questioncounter}
+\newcommand{\question}[1]{
+    \stepcounter{questioncounter}
+    \textbf{\\\textcolor{red}{\arabic{questioncounter}. #1}}\\
+}
+
+\let\olditemize\itemize
+\renewcommand\itemize{\olditemize\setlength\itemsep{0em}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+\title{Domande Orale Primo Modulo}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+Domande per l'orale del primo modulo di Analisi e Progettazione di Algoritmi (APA).
+\question{Complessità di problemi, problemi aperti e chiusi}
+Un problema può avere complessità $O(f(n)), \Omega(f(n)) \text{ o } \Theta(f(n))$. Solitamente $O$ è per indicare il caso peggiore (quindi il limite superiore), $\Omega$ per il caso migliore (quindi il limite inferiore) e $\Theta$ quando si conoscono il limite inferiore e superiore.
+Nel caso di algoritmi randomizzati si calcola la media pesata di tutti i tempi di esecuzione per uno stesso input e quello che interessa è il caso peggiore, quindi quello con tempo di esecuzione maggiore.\\
+Un problema si dice \textbf{chiuso} quando esiste un algoritmo di complessità $O(f(n))$ e si è dimostrato che qualunque algoritmo risolvente ha complessità $\Omega(f(n))$, ossia non può esistere un algoritmo di complessità inferiore a $\Omega(f(n))$ (in altre parole $O(f(n)) = \Omega(f(n))$), dimostrando così che l'algoritmo è \textbf{ottimo} con possibili miglioramenti marginali.\\ Un problema si dice \textbf{aperto} quando il miglior algoritmo risolvente noto è $O(f(n))$ e si è dimostrato che qualunque algoritmo risolvente deve avere complessità $\Omega(g(n))$ con $g \neq f$. In altri termini, si sa risolvere il problema in un tempo $f(n)$ e si sa che non lo si può risolvere in un tempo migliore $g(n)$, dove $g$ 'cresce meno' di $f$ (in altre parole $O(f(n)) \neq \Omega(g(n))$).\\
+Un problema potrebbe avere anche un \textbf{gap algoritmico} che può essere chiuso 'dal di sopra' trovando un algoritmo migliore che, se coincide con il limite inferiore, rende l'algoritmo chiuso e ottimo oppure 'dal di sotto' dimostrando che esiste un limite inferiore più alto, similmente a prima se questo coincide con il limite superiore l'algoritmo è chiuso e ottimo.
+\question{Algoritmo di Dijkstra}
+Problema: dato un grafo orientato pesato $G$, con pesi non negativi e dati un nodo di partenza $s$ e un nodo di arrivo $t$, trovare un cammino minimo tra $s$ e $t$.
+\begin{lstlisting}[language=C]
+    Dijkstra(G,s)
+        for each (u nodo in G) dist[u] = +inf
+        parent[s] = null; dist[s] = 0
+        Q = heap vuoto
+        for each (u nodo in G) Q.add(u,dist[u])
+        while(Q non vuota)
+            u = Q.getMin() // nodo u nero
+            for each((u,v) arco in G)
+                if dist[u] + peso(u,v) < dist[v]
+                    dist[v] = dist[u] + peso(u,v); parent[v] = u
+                    Q.changePriority(v,dist[v])
+        return dist, parent
+\end{lstlisting}
+A parole: si inizializzano i pesi dei nodi a $\infty$ tranne che per il nodo di partenza che si inizializza a 0. Si crea un heap con i nodi e i loro pesi e, fino a quando l'heap non è vuoto, si estrae il nodo grigio con peso minore e si marca come visitato (nero). Per ogni arco uscente dal nodo si controlla se il peso del nodo di partenza più il peso dell'arco è minore del peso "registrato" nell'heap, in tal caso si aggiorna il peso e si cambia la priorità nell'heap e si marca il nodo $v$ come grigio.\\
+\textbf{NB}: in un heap il padre ha priorità minore dei figli, quindi il nodo con peso minore è in cima all'heap.\\
+\textbf{Complessità:}
+\begin{itemize}
+    \item Inizializzazione nodi bianchi: $O(n)$
+    \item $n$ estrazioni da heap: $O(n \log n)$
+    \item ciclo interno dove ogni arco viene percorso una volta e per ogni nodo adiacente si ha eventuale cambio di priorità: $O(m\log n)$
+\end{itemize}
+Complessivamente $O(n \log n + m \log n)=O((n+m)\log n)$, nel caso di grafo denso $m=n^{2} \rightarrow O(n^{2}\log n)$
+\question{Definizione di minimo albero ricoprente, algoritmi di Prim e Kruskal}
+\question{Definizione di ordinamento topologico, i due algoritmi per calcolarlo}
+\question{Definizione di componenti fortemente connesse, l'algoritmo per calcolarle}
+\question{Caratteristiche della programmazione dinamica, problema LCS e algoritmo per risolverlo, algoritmo di Floyd-Warshall}
+\question{Definizioni di problema di decisione, astratto e concreto, algoritmo di verifica, classi P, NP e NP-C}
+\question{Nozione di riduzione polinomiale, definizione di classe NP-C, problema P-NP}
+\question{Esempi di problemi NP-completi e riduzioni (SAT, 3SAT, CLIQUE)}
+\end{document}
