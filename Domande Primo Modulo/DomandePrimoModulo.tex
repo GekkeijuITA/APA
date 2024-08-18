@@ -83,7 +83,84 @@ A parole: si inizializzano i pesi dei nodi a $\infty$ tranne che per il nodo di 
 \end{itemize}
 Complessivamente $O(n \log n + m \log n)=O((n+m)\log n)$, nel caso di grafo denso $m=n^{2} \rightarrow O(n^{2}\log n)$
 \question{Definizione di minimo albero ricoprente, algoritmi di Prim e Kruskal}
+Un \textbf{minimo albero ricoprente} di $G$ è un albero ricoprente (che contiene tutti i nodi del grafo ed è aciclico) di $G$ in cui la somma degli archi è minima.
+\begin{lstlisting}[language=C]
+    Prim(G,s)
+        for each (u nodo in G) marca u come non visitato
+        for each (u nodo in G) dist[u] = inf
+        parent[s] = null ; dist[s] = 0
+        Q = heap vuoto
+        for each (u nodo in G) Q.add(u,dist[u])
+        while (Q non vuoto)
+            u = Q.getMin()
+            marca u come visitato (nero)
+            for each((u,v) arco in G)
+                if v non visitato e peso(u,v) < dist[v]
+                    dist[v] = peso(u,v); parent[v] = u
+                    Q.changePriority(v,dist[v])
+\end{lstlisting}
+\textbf{Complessità:} uguale a Dijkstra, $O((n+m)\log n)$
+\begin{lstlisting}[language=C]
+    Kruskal(G)
+        s = sequenza di archi di G in ordine di costo crescente
+        T = foresta formata dai nodi di G e nessun arco
+        counter = 0
+        while(counter < n-1)
+            estrai da s il primo elemento (u,v)
+            if (u,v non connessi in T) T = T + (u,v) // aggiungi arco
+            counter++
+        return T
+\end{lstlisting}
+\textbf{Complessità:} il problema è controllare se due nodi sono già connessi. Farlo in modo banale con una visita dei due alberi richiede $O(n)$ nel caso peggiore, quindi si ha $O(n\cdot m)$.
+\begin{lstlisting}[language=C]
+    KruskalUF(G)
+        s = sequenza di archi di G in ordine di costo crescente
+        T = foresta formata dai nodi di G e nessun arco
+        UF = struttura union-find vuota
+        for each (u nodo in G) UF.makeSet(u)
+        while (s non vuota)
+            estrai da s il primo elemento (u,v)
+            if(UF.union_by_need(u,v)) 
+            // esegue la union delle radici se UF.find(u) != UF.find(v)
+                T = T + (u,v)
+        return T
+\end{lstlisting}
+\textbf{Complessità:} $O(m\log m)$
 \question{Definizione di ordinamento topologico, i due algoritmi per calcolarlo}
+Un ordinamento topologico di un grafo orientato aciclico (DAG) $G=(V,E)$ è un ordine totale stretto su $V$ tale che se $(u,v) \in E$ allora $u$ precede $v$ nell'ordinamento ($u<v$).
+\begin{lstlisting}[language=C]
+    topologicalsort(G)
+        S = insieme vuoto
+        Ord = sequenza vuota
+        for each (u nodo in G) indegree[u] = indegree di u
+        for each (u nodo in G)
+            if indegree[u] == 0 S.add(u)
+        while (S non vuoto)
+            u = S.remove()
+            Ord.add(u) // in fondo
+            for each ((u,v) arco in G)
+                indegree[v]--
+                if indegree[v] == 0 S.add(v)
+        return Ord
+\end{lstlisting}
+\textbf{Complessità:} $O(n+m)$
+\begin{lstlisting}[language=C]
+    DFS(G)
+        for each (u nodo in G) marca u come bianco ; parent[u] = null
+        time = 0
+        for each (u nodo in G)
+            if u bianco DFS-Visit(G,u)
+
+    DFS-Visit(G,u,T)
+        time++; start[u] = time
+        visita u ; marca u come grigio
+        for each ((u,v) arco in G)
+            if v bianco
+                parent[v] = u
+                DFS-Visit(G,v)
+        time++; end[u] = time
+\end{lstlisting}
+\textbf{Complessità:} $O(n+m)$
 \question{Definizione di componenti fortemente connesse, l'algoritmo per calcolarle}
 \question{Caratteristiche della programmazione dinamica, problema LCS e algoritmo per risolverlo, algoritmo di Floyd-Warshall}
 \question{Definizioni di problema di decisione, astratto e concreto, algoritmo di verifica, classi P, NP e NP-C}
