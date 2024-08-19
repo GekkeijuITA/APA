@@ -162,7 +162,69 @@ Un ordinamento topologico di un grafo orientato aciclico (DAG) $G=(V,E)$ è un o
 \end{lstlisting}
 \textbf{Complessità:} $O(n+m)$
 \question{Definizione di componenti fortemente connesse, l'algoritmo per calcolarle}
+In un grafo orientato $G$, due nodi $u$ e $v$ si dicono mutualmente raggiungibili, o \textbf{fortemente connessi}, se ognuno dei due è raggiungibile dall'altro, ossia se esistono un cammino da $u$ a $v$ e un cammino da $v$ a $u$. Una \textbf{componente fortemente connessa} è un sottografo di $G$ in cui i nodi sono tutti fortemente connessi tra loro.
+\begin{lstlisting}[language=C]
+    SCC(G)
+        DFS(G, Ord)
+        GT = grafo trasposto di G
+        OrdFC = sequenza vuota // componenti fortemente connesse
+        while(Ord non vuota)
+            u = ultimo nodo visitato in Ord
+            C = insieme di nodi vuoto
+            DFS(GT,u,C)
+            OrdFC.add(C)
+        return OrdFC    
+\end{lstlisting}
+\textbf{Complessità:} $O(n+m)$
+\begin{lstlisting}[language=C]
+    CFC(G)
+        Ord = DFS(G) // con i time-stamp (solo questa)
+        GT = grafo trasposto di G
+        OrdFC = sequenza vuota // componenti fortemente connesse
+        while(Ord non vuota)
+            u = primo nodo non visitato in Ord
+            C = DFS(GT,u)
+            OrdFC.add(C)
+        return OrdFC    
+\end{lstlisting}
 \question{Caratteristiche della programmazione dinamica, problema LCS e algoritmo per risolverlo, algoritmo di Floyd-Warshall}
+La programmazione dinamica è vantaggiosa se un sottoproblema viene usato più volte, si basa su def. ricorsiva come divide-et-impera e la correttezza per induzione forte, spesso bottom-up (memorizzazione dei risultati dei sottoproblemi).\\
+LCS problema: date due sequenze trovare una sottosequenza comune di lunghezza massima.\\
+Si costruisce una matrice LCS con m+1 righe e n+1 colonne. La prima riga e la prima colonna sono inizializzate a 0. Si può procedere riga per riga o colonna per colonna, l'ultima casella (angolo in basso a destra) conterrà la soluzione. Se si ha lo stesso carattere sulla riga e sulla colonna, una "freccia diagonale", aumentando di 1 la lunghezza rispetto alla casella puntata dalla freccia; se sulla riga e sulla colonna ci sono due caratteri diversi, una freccia verso la casella con il valore maggiore tra la casella sopra e la casella a sinistra (se i valori sono uguali punto sempre sopra). Per l'algoritmo abbiamo la matrice L per le lunghezze e la matrice R dei riferimenti, X e Y sono le sequenze.
+\begin{lstlisting}[language=C]
+    LCS(L,R,X,Y)
+        for(i=0;i<=m;i++) L[i][0] = 0
+        for(j=0;j<=n;j++) L[0][j] = 0
+
+        for(i=1;i<=m;i++)
+            for(j=1;j<=n;j++)
+                if(X[i]==Y[j])
+                    L[i,j] = L[i-1,j-1] + 1
+                    R[i,j] = "diagonale"
+                else if(L[i-1,j] > L[i,j-1])
+                    L[i,j] = L[i,j-1]
+                    R[i,j] = "sinistra"
+                else
+                    L[i,j] = L[i-1,j]
+                    R[i,j] = "sopra"
+\end{lstlisting}
+In corrispondenza di ogni freccia diagonale abbiamo un elemento della sottosequenza comune.\\
+\textbf{Complessità:} $\Theta(mn)$.\\
+Problema: dato un grafo pesato $G$ trovare il cammino minimo tra ogni coppia di nodi. Sono ammessi costi negativi ma non cicli di costo negativo.\\
+Idea: chiamiamo k-vincolato un cammino che passa solo per nodi $1\ldots k$ (esclusi gli estremi), per $k\leq n$, e indichiamo con $d^{k}(x,y)$ la distanza k-vincolata tra $x$ e $y$, cioè la lunghezza minima di un cammino k-vincolato.
+\begin{lstlisting}[language=C]
+    Floyd-Warshall(G)
+        for each (x,y nodi in G)
+            D[x,y] = 0 se x=y, peso(x,y) se x!=y, +inf altrimenti
+            P[x,y] = x se x!=y e (x,y) in E, null altrimenti
+        for (k=1;k<=n;k++)
+            for (x,y nodi in G)
+                if (D[x,k]+D[k,y]<D[x,y])
+                    D[x,y] = D[x,k]+D[k,y]
+                    P[x,y] = P[k,y]
+        return D,P
+\end{lstlisting}
+\textbf{Complessità:} $O(n^{3})$
 \question{Definizioni di problema di decisione, astratto e concreto, algoritmo di verifica, classi P, NP e NP-C}
 \question{Nozione di riduzione polinomiale, definizione di classe NP-C, problema P-NP}
 \question{Esempi di problemi NP-completi e riduzioni (SAT, 3SAT, CLIQUE)}
