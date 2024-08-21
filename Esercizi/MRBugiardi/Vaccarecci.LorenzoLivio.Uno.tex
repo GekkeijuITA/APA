@@ -40,16 +40,24 @@
 
 \lstset{style=mystyle}
 
-\title{Accordo Bizantino MC}
+\title{MR Bugiardi}
 \author{Lorenzo Livio Vaccarecci (matr. 5462843)}
 \date{A.A. 2023/2024}
 
 \begin{document}
 \maketitle
 \section{Codice}
-\lstinputlisting[language=Python]{accordobizantino.py}
-\section{Osservazioni}
-\includegraphics[width=\textwidth]{Grafico.png}
-Il grafico suggerisce che la maggior parte delle $2^{10}$ esecuzioni dell'accordo bizantino viene completata nel primo round, con un dimezzamento del successo ad ogni round successivo.\\
-Se in un qualche round per un processo affidabile $j$ risulta che $tally(j)\geq T$ e l'esito del lancio della moneta coincide con $maj(j)$, il round successivo l'accordo è certamente raggiunto perchè significa che almeno $T$ processi hanno raggiunto l'accordo su un valore e, se coincide con il lancio della moneta, nel round successivo il valore verrà propagato ai processi rimanenti facendo raggiungere l'accordo.
+\lstinputlisting[language=Python]{PrimalityTest.py}
+Sappiamo che per i numeri di Carmichael i bugiardi sono i coprimi e per sicurezza controllo se Hn è uguale ai coprimi.
+\begin{itemize}
+    \item I bugiardi per \textbf{561} sono tutti i numeri da 1 a 560 tranne tutti i multipli di [3,11,17] (compresi)
+    \item I bugiardi per \textbf{1105} sono tutti i numeri da 1 a 1104 tranne tutti i multipli di [5,13,17] (compresi)
+    \item I bugiardi per \textbf{1729} sono tutti i numeri da 1 a 1728 tranne tutti i multipli di [7,13,19] (compresi)
+    \item I bugiardi per \textbf{2465} sono tutti i numeri da 1 a 2464 tranne tutti i multipli di [5,17,29] (compresi)
+    \item I bugiardi per \textbf{2821} sono tutti i numeri da 1 a 2820 tranne tutti i multipli di [7,13,31] (compresi)
+    \item I bugiardi per \textbf{6601} sono tutti i numeri da 1 a 6600 tranne tutti i multipli di [7,23,41] (compresi)
+    \item I bugiardi per \textbf{8911} sono tutti i numeri da 1 a 8910 tranne tutti i multipli di [7,19,67] (compresi)
+\end{itemize}
+
+
 \end{document}

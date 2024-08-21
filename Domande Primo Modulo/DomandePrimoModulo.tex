@@ -226,6 +226,14 @@ Idea: chiamiamo k-vincolato un cammino che passa solo per nodi $1\ldots k$ (escl
 \end{lstlisting}
 \textbf{Complessità:} $O(n^{3})$
 \question{Definizioni di problema di decisione, astratto e concreto, algoritmo di verifica, classi P, NP e NP-C}
+Un problema (astratto) è una relazione $\mathcal{P}\subseteq I\times S$, dove $I$ è l'insieme degli input (o istanze del problema) e $S$ è l'insieme delle (possibili) soluzioni. In generale per ogni istanza la soluzione può non essere unica.\\
+Un \textbf{problema (astratto) di decisione} $\mathcal{P}$ è un problema (astratto) in cui ogni input ha come soluzione vero oppure falso, ossia $\mathcal{P}:I\rightarrow \{T,F\}$. Dato un problema $\mathcal{P}:I\rightarrow \{T,F\}$, diciamo che un algoritmo $A$ risolve $\mathcal{P}$ se $\forall i\in I, A(i)=\mathcal{P}(i)$.\\
+Un \textbf{problema concreto} $\mathcal{P}$ è un problema il cui insieme di istanze è l'insieme delle stringhe binarie, ossia $\mathcal{P}:\{0,1\}^{*}\rightarrow \{T,F\}$. Un problema astratto può essere rappresentato in modo concreto tramite una codifica, ossia una funzione iniettiva: $c:I\rightarrow \{0,1\}^{*}$. Il problema $c(\mathcal{P}) \text{ è definito da } c(\mathcal{P})(x)=T \text{ se e solo se } x=c(i) \text{ e } \mathcal{P}(i)=T$, ossia assumiamo convenzionalmente che la soluzione sia falso sulle stringhe che non sono codifica di nessun input.
+\begin{itemize}
+    \item Classe P: problemi risolvibili in tempo polinomiale
+    \item Classe NP: problemi per i quali esiste un algoritmo di verifica polinomiale
+\end{itemize}
+\textbf{Da finire.}
 \question{Nozione di riduzione polinomiale, definizione di classe NP-C, problema P-NP}
 \question{Esempi di problemi NP-completi e riduzioni (SAT, 3SAT, CLIQUE)}
 \end{document}
