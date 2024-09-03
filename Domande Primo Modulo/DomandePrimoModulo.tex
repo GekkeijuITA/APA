@@ -45,13 +45,12 @@
 \lstset{style=mystyle}
 
 
-\title{Domande Orale Primo Modulo}
+\title{Domande Orale Primo Modulo: Analisi e Progettazione di Algoritmi (APA)}
 \author{}
 \date{}
 
 \begin{document}
 \maketitle
-Domande per l'orale del primo modulo di Analisi e Progettazione di Algoritmi (APA).
 \question{Complessità di problemi, problemi aperti e chiusi}
 Un problema può avere complessità $O(f(n)), \Omega(f(n)) \text{ o } \Theta(f(n))$. Solitamente $O$ è per indicare il caso peggiore (quindi il limite superiore), $\Omega$ per il caso migliore (quindi il limite inferiore) e $\Theta$ quando si conoscono il limite inferiore e superiore.
 Nel caso di algoritmi randomizzati si calcola la media pesata di tutti i tempi di esecuzione per uno stesso input e quello che interessa è il caso peggiore, quindi quello con tempo di esecuzione maggiore.\\
@@ -228,12 +227,32 @@ Idea: chiamiamo k-vincolato un cammino che passa solo per nodi $1\ldots k$ (escl
 \question{Definizioni di problema di decisione, astratto e concreto, algoritmo di verifica, classi P, NP e NP-C}
 Un problema (astratto) è una relazione $\mathcal{P}\subseteq I\times S$, dove $I$ è l'insieme degli input (o istanze del problema) e $S$ è l'insieme delle (possibili) soluzioni. In generale per ogni istanza la soluzione può non essere unica.\\
 Un \textbf{problema (astratto) di decisione} $\mathcal{P}$ è un problema (astratto) in cui ogni input ha come soluzione vero oppure falso, ossia $\mathcal{P}:I\rightarrow \{T,F\}$. Dato un problema $\mathcal{P}:I\rightarrow \{T,F\}$, diciamo che un algoritmo $A$ risolve $\mathcal{P}$ se $\forall i\in I, A(i)=\mathcal{P}(i)$.\\
-Un \textbf{problema concreto} $\mathcal{P}$ è un problema il cui insieme di istanze è l'insieme delle stringhe binarie, ossia $\mathcal{P}:\{0,1\}^{*}\rightarrow \{T,F\}$. Un problema astratto può essere rappresentato in modo concreto tramite una codifica, ossia una funzione iniettiva: $c:I\rightarrow \{0,1\}^{*}$. Il problema $c(\mathcal{P}) \text{ è definito da } c(\mathcal{P})(x)=T \text{ se e solo se } x=c(i) \text{ e } \mathcal{P}(i)=T$, ossia assumiamo convenzionalmente che la soluzione sia falso sulle stringhe che non sono codifica di nessun input.
+Un \textbf{problema concreto} $\mathcal{P}$ è un problema il cui insieme di istanze è l'insieme delle stringhe binarie, ossia $\mathcal{P}:\{0,1\}^{*}\rightarrow \{T,F\}$. Un problema astratto può essere rappresentato in modo concreto tramite una codifica, ossia una funzione iniettiva: $c:I\rightarrow \{0,1\}^{*}$. Il problema $c(\mathcal{P}) \text{ è definito da } c(\mathcal{P})(x)=T \text{ se e solo se } x=c(i) \text{ e } \mathcal{P}(i)=T$, ossia assumiamo convenzionalmente che la soluzione sia falso sulle stringhe che non sono codifica di nessun input.\\
+L'\textbf{algoritmo di verifica} per un problema (astratto) $\mathcal{P}\subseteq I$ è un algoritmo $A:I\times C\rightarrow\{T,F\}$, dove $C$ è un insieme di certificati (un certificato è una "prova" che dimostra la verità della proprietà da verificare), e $A(x,y)=T$ per qualche $y$ se e solo se $x\in \mathcal{P}$.\\
 \begin{itemize}
     \item Classe P: problemi risolvibili in tempo polinomiale
     \item Classe NP: problemi per i quali esiste un algoritmo di verifica polinomiale
+    \item Classe NP-C: problemi "più difficili" di NP che sappiamo risolvere solo in tempo esponenziale ma non possiamo escludere che esistano algoritmi in tempo polinomiale per risolverli. Questi problemi godono di un'importante proprietà: se si scoprisse un algoritmo che risolve uno di questi problemi in tempo polinomiale, tutti i problemi di NP-C (e come conseguenza tutti quelli di NP) sarebbero risolvibili in tempo polinomiale dimostrando quindi che $P=NP$
 \end{itemize}
-\textbf{Da finire.}
 \question{Nozione di riduzione polinomiale, definizione di classe NP-C, problema P-NP}
+Dati due problemi concreti $\mathcal{P}_{1} \text{ e } \mathcal{P}_{2}$, diciamo che $\mathcal{P}_{1}$ è riducibile polinomialmente a $\mathcal{P}_{2}$, e scriviamo $\mathcal{P}_{1}\leq_{\text{P}}\mathcal{P}_{2}$, se esiste una funzione $f:\{0,1\}^{*}\rightarrow\{0,1\}^{*}$, detta funzione di riduzione, calcolabile in tempo polinomiale, tale che, per ogni $x\in\{0,1\}^{*}, x\in\mathcal{P}_{1}$ se e solo se $f(x)\in\mathcal{P}_{2}$.\\
+Definizione di classe NP-C nella domanda (7).\\
+La domanda del problema P-NP è che non si sa se $P=NP$ o $P\subset NP$, ossia se ci sono problemi verificabili in tempo polinomiale che non sono risolvibili in tempo polinomiale. Quello che è intuitivamente chiaro è che $P\subseteq NP$, ossia che se so risolvere un problema in tempo polinomiale so anche verificarlo in tempo polinomiale. Collegamento con definizione di NP-C. Se un qualunque problema NP-C appartiene alla classe P, allora si ha $P=NP$, o, equivalentemente, se è $P\neq NP$, quindi esiste almeno un problema in NP non risolvibile in tempo polinomiale, allora nessun problema NP-C è risolvibile in tempo polinomiale.\\
 \question{Esempi di problemi NP-completi e riduzioni (SAT, 3SAT, CLIQUE)}
+Prima di iniziare, definiamo CNF:
+\begin{itemize}
+    \item $ l ::= x|\bar{x} $ letterale
+    \item $ c ::= l_{1}\lor\ldots\lor l_{n} $ clausola
+    \item $ \phi_{CNF} ::= c_{1}\land\ldots\land c_{n} $ formula in CNF
+    \item $ \phi_{Q} ::= \phi_{CNF}|\exists x.\phi_{Q}|\forall x.\phi_{Q} $
+\end{itemize}
+\begin{itemize}
+    \item \textbf{SAT}(Boolean \textbf{SAT}isfiability): data una formula in forma normale congiuntiva (CNF), determinare se esiste un'assegnazione di valori di verità alle variabili che la renda vera. (Data una formula booleana dire se si riesce a dare un valore (vero o falso) alle variabili che la renda vera). Questo problema è NP-completo: si definisce un algoritmo che, dato un problema $\mathcal{P}\in NP$ e un input $x$ per $\mathcal{P}$, costruisce una formula CNF che descrive un algoritmo non deterministico per $\mathcal{P}$, ossia la formula è soddisfacibile se e solo se l'algoritmo restituisce $T$.
+    \item \textbf{3SAT}: è un problema di soddisfacibilità booleana in cui ogni clausola ha esattamente 3 letterali. È NP-completo: visto che 3SAT è una riduzione di SAT $\rightarrow 3SAT\subseteq SAT \in NP$.
+    \item \textbf{CLIQUE}(o cricca): in un grafo non orientato $G=(V,E)$ è un insieme $V'\subseteq V$ di nodi tale che per ogni coppia di essi esiste l'arco che li collega, ossia il sottografo indotto da $V'$ è completo. La dimensione di una clique è il numero dei suoi nodi. Il problema della clique è quello di trovare una clique di dimensione massimo in un grafo. Il corrispondente problema di decisione richiede di determinare se nel grafo esiste una clique di dimensione $k$. Questo problema è NP-completo: dando una riduzione di 3SAT (dando una formula 3CNF $\phi$ formata da $k$ clausole), costruiamo il grafo $G_{\phi}$ nel modo seguente: \begin{itemize}
+        \item Un nodo per ogni occorrenza di letterale in una clausola, quindi $3k$ nodi
+        \item Un arco tra due occorrenze di  letterali se sono in due clausole diverse e non sono uno la negazione dell'altro
+    \end{itemize}
+    Se $\phi$ è soddisfacibile allora esiste una clique di dimensione $k$ in $G_{\phi}$. Se $G_{\phi}$ contiene una clique di $k$ nodi, sappiamo che contiene esattamente un nodo per ogni clausola (con i corrispondenti letterali $l_{1},\ldots,l_{n}$) scegliamo un'assegnazione di valori alle variabili che risultino veri, ciò è possibile in quanto sappiamo che non ci sono negazioni di letterali, altrimenti non ci sarebbe l'arco tra i due nodi. Con questa assegnazione ogni clausola è soddisfatta, e quindi l'intera formula.
+\end{itemize}
 \end{document}
