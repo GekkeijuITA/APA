@@ -213,6 +213,16 @@ Problema: dato un grafo pesato $G$ trovare il cammino minimo tra ogni coppia di 
 Idea: chiamiamo k-vincolato un cammino che passa solo per nodi $1\ldots k$ (esclusi gli estremi), per $k\leq n$, e indichiamo con $d^{k}(x,y)$ la distanza k-vincolata tra $x$ e $y$, cioè la lunghezza minima di un cammino k-vincolato.
 \begin{lstlisting}[language=C]
     Floyd-Warshall(G)
+        for each (x,y : nodi in G)
+            D0[x,y] = 0 se x=y, peso(x,y) se x!=y, +inf altrimenti
+        for (k=1;k<=n;k++)
+            for(x,y : nodi in G) Dk[x,y] = Dk-1[x,y]
+            if(Dk-1[x,k]+Dk-1[k,y]<Dk-1[x,y]) Dk[x,y] = Dk-1[x,k]+Dk-1[k,y]
+        return Dn
+\end{lstlisting}
+\textbf{Complessità:} $O(n^{3})$
+\begin{lstlisting}[language=C]
+    Floyd-Warshall(G)
         for each (x,y nodi in G)
             D[x,y] = 0 se x=y, peso(x,y) se x!=y, +inf altrimenti
             P[x,y] = x se x!=y e (x,y) in E, null altrimenti
@@ -223,7 +233,7 @@ Idea: chiamiamo k-vincolato un cammino che passa solo per nodi $1\ldots k$ (escl
                     P[x,y] = P[k,y]
         return D,P
 \end{lstlisting}
-\textbf{Complessità:} $O(n^{3})$
+\textbf{Complessità:} $O(n^{2})$
 \question{Definizioni di problema di decisione, astratto e concreto, algoritmo di verifica, classi P, NP e NP-C}
 Un problema (astratto) è una relazione $\mathcal{P}\subseteq I\times S$, dove $I$ è l'insieme degli input (o istanze del problema) e $S$ è l'insieme delle (possibili) soluzioni. In generale per ogni istanza la soluzione può non essere unica.\\
 Un \textbf{problema (astratto) di decisione} $\mathcal{P}$ è un problema (astratto) in cui ogni input ha come soluzione vero oppure falso, ossia $\mathcal{P}:I\rightarrow \{T,F\}$. Dato un problema $\mathcal{P}:I\rightarrow \{T,F\}$, diciamo che un algoritmo $A$ risolve $\mathcal{P}$ se $\forall i\in I, A(i)=\mathcal{P}(i)$.\\
