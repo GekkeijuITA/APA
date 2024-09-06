@@ -210,7 +210,7 @@ Si costruisce una matrice LCS con m+1 righe e n+1 colonne. La prima riga e la pr
 In corrispondenza di ogni freccia diagonale abbiamo un elemento della sottosequenza comune.\\
 \textbf{Complessità:} $\Theta(mn)$.\\
 Problema: dato un grafo pesato $G$ trovare il cammino minimo tra ogni coppia di nodi. Sono ammessi costi negativi ma non cicli di costo negativo.\\
-Idea: chiamiamo k-vincolato un cammino che passa solo per nodi $1\ldots k$ (esclusi gli estremi), per $k\leq n$, e indichiamo con $d^{k}(x,y)$ la distanza k-vincolata tra $x$ e $y$, cioè la lunghezza minima di un cammino k-vincolato.
+Idea: chiamiamo k-vincolato un cammino che passa solo per nodi $1\ldots k$ (esclusi gli estremi), per $k\leq n$, e indichiamo con $d^{k}(x,y)$ la distanza k-vincolata tra $x$ e $y$, cioè la lunghezza minima di un cammino k-vincolato, $D$ si potrebbe pensare come un array di matrici e \texttt{D[k][x][y]} è la distanza tra $x$ e $y$ considerando $k$ come nodo intermedio, infatti $D^{0}$ sarà la matrice con le distanze dei collegamenti \textbf{diretti} tra i nodi. 
 \begin{lstlisting}[language=C]
     Floyd-Warshall(G)
         for each (x,y : nodi in G)
