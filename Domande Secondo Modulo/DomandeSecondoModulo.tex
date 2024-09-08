@@ -54,14 +54,23 @@
 \section{Ordinamento}
 \question{Costruisci l’input peggiore per una versione deterministica di QuickSort che sceglie come
 pivot (a) il primo elemento di una sequenza e (b) l’elemento mediano}
+Se il pivot è il primo elemento, l'input peggiore è una sequenza ordinata in modo crescente o decrescente oppure se è un array composto dagli stessi numeri, mentre se il pivot è l'elemento mediano, un array composto dagli stessi numeri.
 \question{Supponi di avere una probabilità congiunta di 100 variabili casuali di Bernoulli non indipendenti. Se devi calcolare il valore atteso della somma partendo da questa distribuzione
 quanti sono i termini da sommare? Quanti invece se utilizzi il fatto che il valore atteso di una somma è uguale alla somma dei valori attesi? Che cosa cambia se fossero
 indipendenti?}
 \question{Nell’assunzione che la sequenza S consista dei primi n numeri naturali, spiega per quale
-motivo la probabilità che i sia confrontato con j può essere espressa come}
+motivo la probabilità che i sia confrontato con j può essere espressa come
 \begin{equation*}
     \frac{2}{\lvert i - j \rvert + 1}
-\end{equation*}
+\end{equation*}}
+Introduciamo le variabili indicatrici $I(i,j)$ con $i<j$, con $i=1,\ldots,n-1$ e $j=1,\ldots,n$ \iffalse 
+definite come \begin{equation*} I(i,j)=    \begin{cases}
+    1 & \text{se } i \text{ è confrontato con } j\\
+    0 & \text{altrimenti}
+\end{cases} \end{equation*}
+il numero di confronti effettuati è dato da $X=\sum_{i=1}^{n-1}\sum_{j=i+1}^{n}I(i,j)$, nel caso peggiore $I(i,j)$ vale 1 per tutti gli $i$ e $j$ (li confronto tutti) e $X=\frac{n(n-1)}{2}$ 
+\fi . Inizialmente tutti i $j-i+1$ numeri tra $i$ e $j$ sono nella stessa partizione. A ogni passo, se il numero campionato è minore di $i$ o maggiore di $j$, tutti i valori tra $i$ e $j$ non saranno confrontati tra loro e rimarranno nella stessa partizione. Se il numero campionato è $k$ con $i<k<j$, i valori tra $i$ e $k$ saranno confrontati con $k$ e i valori tra $k$ e $j$ saranno confrontati con $k$. Quindi, se $k=i$ o $k=j$, il numero di confronti è $2$. Con 2 casi favorevoli su $j-i+1$ possibili, la probabilità che vengano confrontati ($p_{ij}(1)$) è $\frac{2}{j-i+1}$.
+
 \section{Teoria dei giochi}
 \question{Determina il migliore degli scenari possibili per Roberta e Carlo data una matrice M dei
 pagamenti in un gioco a somma zero}
