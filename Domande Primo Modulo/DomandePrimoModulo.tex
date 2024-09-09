@@ -124,7 +124,13 @@ Un \textbf{minimo albero ricoprente} di $G$ è un albero ricoprente (che contien
                 T = T + (u,v)
         return T
 \end{lstlisting}
-\textbf{Complessità:} $O(m\log m)$
+\textbf{Complessità:}
+\begin{itemize}
+    \item Ordinamento degli archi: $O(m\log m)$
+    \item makeSet: $O(n)$
+    \item $2m$ find e $n-1$ union: $O(n+m)$ (circa)
+\end{itemize}
+Complessivamente $O(m\log m + n+m)=O(m\log m)$
 \question{Definizione di ordinamento topologico, i due algoritmi per calcolarlo}
 Un ordinamento topologico di un grafo orientato aciclico (DAG) $G=(V,E)$ è un ordine totale stretto su $V$ tale che se $(u,v) \in E$ allora $u$ precede $v$ nell'ordinamento ($u<v$).
 \begin{lstlisting}[language=C]
